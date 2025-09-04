@@ -35,8 +35,8 @@ public class UsuarioModel {
     @NotNull(message = "A senha não pode ser nula")
     @NotBlank(message = "A senha não pode ser de espassos brancos")
     @Length(min = 8)
-    private String senhaHash;
+    private String senha;
 
-    @Column(name = "data_cadastro", nullable = false)
+    @Column(name = "data_cadastro")
     private LocalDateTime dataCadastro;
 }
