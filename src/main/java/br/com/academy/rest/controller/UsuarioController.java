@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @GetMapping("/{pEmail}")
     public ResponseEntity<UsuarioDTO> buscarUsuarioPorEmail(@PathVariable String pEmail){
         UsuarioDTO buscarUsuario = usuarioService.obterUsuarioPorEmail(pEmail);
@@ -24,6 +28,7 @@ public class UsuarioController {
 
     @PostMapping
      public ResponseEntity<UsuarioDTO> cadastrarUsuario(@Valid @RequestBody UsuarioModel input){
+        input.setSenha(encoder.encode(input.getSenha()));
         UsuarioDTO usuario = usuarioService.adicionarUsuario(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
