@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -67,5 +68,16 @@ public class UsuarioService {
         }
 
         usuarioRepositery.deleteById(pId);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean validarLoginESenha(String pEmail, String pSenha){
+        Optional<UsuarioModel> usuario = usuarioRepositery.findByEmail(pEmail);
+
+        if (usuario.isEmpty()){
+            throw new ConstraintException("Usuário inexistente na base de dados!");
+        }
+
+        return encoder.matches(pSenha, usuario.get().getSenha());
     }
 }
