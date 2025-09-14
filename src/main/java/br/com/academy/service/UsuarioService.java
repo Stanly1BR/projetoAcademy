@@ -34,6 +34,12 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder encoder;
 
+    /*
+    * ===================================================================================
+    * CRUD PADRÃO (Buscar, Listar todos, Salvar, Atualizar e Deletar)
+    * ===================================================================================
+    * */
+
     @Transactional(readOnly = true)
     public UsuarioInputDTO obterUsuarioPorEmail(String pEmail){
         UsuarioModel usuarioNovo = usuarioRepositery.findByEmail(pEmail).orElseThrow(()-> new ObjectNotFoundException("Usuário não encontrado"));
@@ -76,6 +82,12 @@ public class UsuarioService {
         usuarioRepositery.deleteById(pId);
     }
 
+    /*
+     * ===================================================================================
+     * Demais funções
+     * ===================================================================================
+     * */
+
     @Transactional(readOnly = true)
     public Boolean validarLoginESenha(String pEmail, String pSenha){
         Optional<UsuarioModel> usuario = usuarioRepositery.findByEmail(pEmail);
@@ -83,7 +95,6 @@ public class UsuarioService {
         if (usuario.isEmpty()){
             throw new ConstraintException("Usuário inexistente na base de dados!");
         }
-
         return encoder.matches(pSenha, usuario.get().getSenha());
     }
 }

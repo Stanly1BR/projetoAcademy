@@ -19,6 +19,12 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    /*
+     * ===================================================================================
+     * CRUD PADRÃO (Buscar, Listar todos, Salvar, Atualizar e Deletar)
+     * ===================================================================================
+     * */
+
     @GetMapping("/{pEmail}")
     public ResponseEntity<UsuarioInputDTO> buscarUsuarioPorEmail(@PathVariable String pEmail){
         UsuarioInputDTO buscarUsuario = usuarioService.obterUsuarioPorEmail(pEmail);
@@ -37,14 +43,8 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuario);
     }
 
-    @PostMapping("Validar")
-    public ResponseEntity<Boolean> validarLoginESenha(@RequestBody InputLoginDTO pInput){
-        boolean validar = usuarioService.validarLoginESenha(pInput.getEmail(), pInput.getSenha());
-        return ResponseEntity.ok().body(validar);
-    }
-
     @PostMapping
-     public ResponseEntity<UsuarioOutputDTO> cadastrarUsuario(@Valid @RequestBody UsuarioInputDTO input){
+    public ResponseEntity<UsuarioOutputDTO> cadastrarUsuario(@Valid @RequestBody UsuarioInputDTO input){
         UsuarioOutputDTO usuario = usuarioService.adicionarUsuario(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
@@ -52,6 +52,18 @@ public class UsuarioController {
     @DeleteMapping("/{pId}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable Integer pId){
         usuarioService.removerUsuario(pId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
+    }
+
+    /*
+     * ===================================================================================
+     * Demais funções
+     * ===================================================================================
+     * */
+
+    @PostMapping("Validar")
+    public ResponseEntity<Boolean> validarLoginESenha(@RequestBody InputLoginDTO pInput){
+        boolean validar = usuarioService.validarLoginESenha(pInput.getEmail(), pInput.getSenha());
+        return ResponseEntity.ok().body(validar);
     }
 }
