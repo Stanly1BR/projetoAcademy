@@ -1,6 +1,6 @@
 package br.com.academy.rest.controller;
 
-import br.com.academy.rest.dto.InputLoginDTO;
+import br.com.academy.rest.dto.LoginInputDTO;
 import br.com.academy.rest.dto.UsuarioInputDTO;
 import br.com.academy.rest.dto.UsuarioOutputDTO;
 import br.com.academy.service.UsuarioService;
@@ -62,7 +62,7 @@ public class UsuarioController {
      * */
 
     @PostMapping("Validar")
-    public ResponseEntity<Boolean> validarLoginESenha(@RequestBody InputLoginDTO pInput){
+    public ResponseEntity<Boolean> validarLoginESenha(@RequestBody LoginInputDTO pInput){
         boolean validar = usuarioService.validarLoginESenha(pInput.getEmail(), pInput.getSenha());
         return ResponseEntity.ok().body(validar);
     }

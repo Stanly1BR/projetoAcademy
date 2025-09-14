@@ -46,7 +46,7 @@ public class UsuarioService {
         return modelMapper.map(usuarioNovo, UsuarioInputDTO.class);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<UsuarioOutputDTO> obterTodos(){
         List<UsuarioModel> usuariosNovo = usuarioRepositery.findAll();
         return usuariosNovo.stream().map(usuario -> modelMapper.map(usuario, UsuarioOutputDTO.class)).collect(Collectors.toList());
