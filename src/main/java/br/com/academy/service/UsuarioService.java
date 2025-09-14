@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,11 +40,11 @@ public class UsuarioService {
         return modelMapper.map(usuarioNovo, UsuarioInputDTO.class);
     }
 
-    /*@Transactional
-    public List<UsuarioDTO> obterTodos(){
+    @Transactional
+    public List<UsuarioOutputDTO> obterTodos(){
         List<UsuarioModel> usuariosNovo = usuarioRepositery.findAll();
-        return usuariosNovo.stream().map(usuario -> modelMapper.map(usuario, UsuarioDTO.class)).collect(Collectors.toList());
-    }*/
+        return usuariosNovo.stream().map(usuario -> modelMapper.map(usuario, UsuarioOutputDTO.class)).collect(Collectors.toList());
+    }
 
     @Transactional
     public UsuarioOutputDTO adicionarUsuario(UsuarioInputDTO input){
@@ -56,10 +58,14 @@ public class UsuarioService {
         return modelMapper.map(usuarioRepositery.save(usuarioNovo), UsuarioOutputDTO.class);
     }
 
-    /*@Transactional
-    public UsuarioDTO atualizarUsuario(UsuarioModel input){
-        return modelMapper.map(usuarioRepositery.save(input), UsuarioDTO.class);
-    }*/
+    @Transactional
+    public UsuarioOutputDTO atualizarUsuario(UsuarioInputDTO input){
+        if (!usuarioRepositery.existsById(input.getId())) {
+            throw new ConstraintException("Usuário não encontrado");
+        }
+
+        return modelMapper.map(usuarioRepositery.save(modelMapper.map(input, UsuarioModel.class)), UsuarioOutputDTO.class);
+    }
 
     @Transactional
     public void removerUsuario(Integer pId){

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/Usuario")
 public class UsuarioController {
@@ -21,6 +23,18 @@ public class UsuarioController {
     public ResponseEntity<UsuarioInputDTO> buscarUsuarioPorEmail(@PathVariable String pEmail){
         UsuarioInputDTO buscarUsuario = usuarioService.obterUsuarioPorEmail(pEmail);
         return ResponseEntity.ok().body(buscarUsuario);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioOutputDTO>> obterTodos(){
+        List<UsuarioOutputDTO> listaUsuarios = usuarioService.obterTodos();
+        return ResponseEntity.ok().body(listaUsuarios);
+    }
+
+    @PutMapping
+    public ResponseEntity<UsuarioOutputDTO> atualizarUsuario(@Valid @RequestBody UsuarioInputDTO input){
+        UsuarioOutputDTO usuario = usuarioService.atualizarUsuario(input);
+        return ResponseEntity.ok().body(usuario);
     }
 
     @PostMapping("Validar")
