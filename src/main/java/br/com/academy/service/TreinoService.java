@@ -34,24 +34,24 @@ public class TreinoService {
      * */
 
     @Transactional(readOnly = true)
-    private TreinoInputDTO obterTreinoPorId(int pId){
+    public TreinoInputDTO obterTreinoPorId(int pId){
         TreinoModel treino = treinoRepository.findById(pId).orElseThrow(()-> new ObjectNotFoundException("Treino não encontrado no banco de dados"));
         return modelMapper.map(treino, TreinoInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<TreinoInputDTO> obterTodosOsTreinos(){
+    public List<TreinoInputDTO> obterTodosOsTreinos(){
         List<TreinoModel> ListaTreinos = treinoRepository.findAll();
         return ListaTreinos.stream().map(treinoModel -> modelMapper.map(treinoModel, TreinoInputDTO.class)).collect(Collectors.toList());
     }
 
     @Transactional
-    private TreinoInputDTO adicionarTreino(TreinoInputDTO input){
+    public TreinoInputDTO adicionarTreino(TreinoInputDTO input){
         return modelMapper.map(treinoRepository.save(modelMapper.map(input, TreinoModel.class)), TreinoInputDTO.class);
     }
 
     @Transactional
-    private TreinoModel atualizarTreino(TreinoInputDTO input){
+    public TreinoModel atualizarTreino(TreinoInputDTO input){
         if (!treinoRepository.existsById(input.getId())){
             throw  new ObjectNotFoundException("Nenhum Treino encontrado com esse ID");
         }
@@ -59,7 +59,7 @@ public class TreinoService {
     }
 
     @Transactional
-    private void removerTreino(int pId){
+    public void removerTreino(int pId){
         if (!treinoRepository.existsById(pId)){
             throw  new ObjectNotFoundException("Nenhum Treino encontrado com esse ID");
         }

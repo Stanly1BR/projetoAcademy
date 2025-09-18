@@ -33,25 +33,25 @@ public class Historico_TreinoService {
      * */
 
     @Transactional(readOnly = true)
-    private Historico_TreinoInputDTO buscarPorId(int pId){
+    public Historico_TreinoInputDTO buscarPorId(int pId){
         Historico_TreinoModel historicoTreino = historico_TreinoRepositery.findById(pId).
                 orElseThrow(()-> new ObjectNotFoundException("Historico do Treino não encontrado"));
         return modelMapper.map(historicoTreino, Historico_TreinoInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<Historico_TreinoInputDTO> buscarTodos(){
+    public List<Historico_TreinoInputDTO> buscarTodos(){
         List<Historico_TreinoModel> historicoTreinos = historico_TreinoRepositery.findAll();
         return historicoTreinos.stream().map(Historico_TreinoModel -> modelMapper.map(Historico_TreinoModel, Historico_TreinoInputDTO.class)).collect(Collectors.toList());
     }
 
     @Transactional
-    private Historico_TreinoInputDTO adicionarHistoricoTreino(Historico_TreinoInputDTO input){
+    public Historico_TreinoInputDTO adicionarHistoricoTreino(Historico_TreinoInputDTO input){
         return modelMapper.map(historico_TreinoRepositery.save(modelMapper.map(input, Historico_TreinoModel.class)), Historico_TreinoInputDTO.class);
     }
 
     @Transactional
-    private Historico_TreinoInputDTO atualizarHistoricoTreino(Historico_TreinoInputDTO input){
+    public Historico_TreinoInputDTO atualizarHistoricoTreino(Historico_TreinoInputDTO input){
         if (!historico_TreinoRepositery.existsById(input.getId())){
             throw  new ObjectNotFoundException("Nenhum Historico de Treino encontrado com esse ID");
         }
@@ -59,7 +59,7 @@ public class Historico_TreinoService {
     }
 
     @Transactional
-    private void removerHistoricoTreino(int pId){
+    public void removerHistoricoTreino(int pId){
         if (!historico_TreinoRepositery.existsById(pId)){
             throw  new ObjectNotFoundException("Nenhum Historico de Treino encontrado com esse ID");
         }

@@ -33,32 +33,32 @@ public class Bloco_ExercicioService {
      * */
 
     @Transactional(readOnly = true)
-    private Bloco_ExercicioInputDTO obterPorId(int pId){
+    public Bloco_ExercicioInputDTO obterPorId(int pId){
         Bloco_ExercicioModel blocoExercicio = bloco_ExercicioRepositery.findById(pId).orElseThrow(()-> new ObjectNotFoundException("Não foi encontrado o bloco de exercicio"));
         return modelMapper.map(blocoExercicio, Bloco_ExercicioInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<Bloco_ExercicioInputDTO> obterTodosOsBlocosExercicios(){
+    public List<Bloco_ExercicioInputDTO> obterTodosOsBlocosExercicios(){
         List<Bloco_ExercicioModel> ListaBlocosExercicios = bloco_ExercicioRepositery.findAll();
         return ListaBlocosExercicios.stream().map(blocoExercicio -> modelMapper.map(blocoExercicio, Bloco_ExercicioInputDTO.class))
                 .collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional
-    private Bloco_ExercicioInputDTO adicionarBlocoExercicio(Bloco_ExercicioInputDTO input){
+    public Bloco_ExercicioInputDTO adicionarBlocoExercicio(Bloco_ExercicioInputDTO input){
         return modelMapper.map(bloco_ExercicioRepositery.save(modelMapper.map(input, Bloco_ExercicioModel.class)), Bloco_ExercicioInputDTO.class);
     }
 
     @Transactional
-    private Bloco_ExercicioInputDTO atualizarBlocoExercicio(Bloco_ExercicioInputDTO input){
+    public Bloco_ExercicioInputDTO atualizarBlocoExercicio(Bloco_ExercicioInputDTO input){
         if (bloco_ExercicioRepositery.existsById(input.getId_bloco_exercicio())){
             throw new ObjectNotFoundException("Não foi encontrado o bloco de exercicio");
         }
         return modelMapper.map(bloco_ExercicioRepositery.save(modelMapper.map(input, Bloco_ExercicioModel.class)), Bloco_ExercicioInputDTO.class);
     }
     @Transactional
-    private void removerBlocoExercicio(int pId){
+    public void removerBlocoExercicio(int pId){
         if (!bloco_ExercicioRepositery.existsById(pId)){
             throw  new ObjectNotFoundException("Nenhum Bloco de Exercicio encontrado com esse ID");
         }

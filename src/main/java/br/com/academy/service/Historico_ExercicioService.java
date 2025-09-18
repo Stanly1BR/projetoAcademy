@@ -34,26 +34,26 @@ public class Historico_ExercicioService {
      * */
 
     @Transactional(readOnly = true)
-    private Historico_ExercicioInputDTO obterHistoricoExercicioPorId(int pId){
+    public Historico_ExercicioInputDTO obterHistoricoExercicioPorId(int pId){
         Optional<Historico_ExercicioModel> historicoTreino = historico_ExercicioRepositery.findById(pId);
         return modelMapper.map(historicoTreino, Historico_ExercicioInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<Historico_ExercicioInputDTO> obterTodosOsHistoricoExercicios(){
+    public List<Historico_ExercicioInputDTO> obterTodosOsHistoricoExercicios(){
         List<Historico_ExercicioModel> ListaHistoricoExercicios = historico_ExercicioRepositery.findAll();
         return ListaHistoricoExercicios.stream().map(historicoExercicioModel ->
                 modelMapper.map(historicoExercicioModel, Historico_ExercicioInputDTO.class)).collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional
-    private Historico_ExercicioInputDTO adicionarHistoricoExercicio(Historico_ExercicioInputDTO input){
+    public Historico_ExercicioInputDTO adicionarHistoricoExercicio(Historico_ExercicioInputDTO input){
         return modelMapper.map(historico_ExercicioRepositery.save(modelMapper.map(input, Historico_ExercicioModel.class))
                 , Historico_ExercicioInputDTO.class);
     }
 
     @Transactional
-    private Historico_ExercicioInputDTO alterarrHistoricoExercicio(Historico_ExercicioInputDTO input){
+    public Historico_ExercicioInputDTO alterarrHistoricoExercicio(Historico_ExercicioInputDTO input){
         if (!historico_ExercicioRepositery.existsById(input.getId_historico_exercicio())){
             throw new ObjectNotFoundException("Historico do exercicio não encontrado");
         }
@@ -61,7 +61,7 @@ public class Historico_ExercicioService {
     }
 
     @Transactional
-    private void deletarHistoricoExercicio(int pId){
+    public void deletarHistoricoExercicio(int pId){
         if (!historico_ExercicioRepositery.existsById(pId)){
             throw new ObjectNotFoundException("Historico do exercicio não encontrado");
         }

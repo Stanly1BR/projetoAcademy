@@ -33,23 +33,23 @@ public class BlocoService {
      * */
 
     @Transactional(readOnly = true)
-    private BlocoInputDTO obterBlocoPorId(int pId){
+    public BlocoInputDTO obterBlocoPorId(int pId){
         BlocoModel bloco = blocoRepositery.findById(pId).orElseThrow(()-> new ObjectNotFoundException("Bloco não encontrado"));
         return modelMapper.map(bloco, BlocoInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<BlocoInputDTO> obterTodosBlocos(){
+    public List<BlocoInputDTO> obterTodosBlocos(){
         List<BlocoModel> ListaBlocos = blocoRepositery.findAll();
         return ListaBlocos.stream().map(blocoModel -> modelMapper.map(blocoModel, BlocoInputDTO.class)).collect(java.util.stream.Collectors.toList());
     }
     @Transactional
-    private BlocoInputDTO adicionarBloco(BlocoInputDTO input){
+    public BlocoInputDTO adicionarBloco(BlocoInputDTO input){
         return modelMapper.map(blocoRepositery.save(modelMapper.map(input, BlocoModel.class)), BlocoInputDTO.class);
     }
 
     @Transactional
-    private BlocoInputDTO atualizarBloco(BlocoInputDTO input){
+    public BlocoInputDTO atualizarBloco(BlocoInputDTO input){
         if (!blocoRepositery.existsById(input.getId())){
             throw  new ObjectNotFoundException("Nenhum Bloco encontrado com esse ID");
         }
@@ -57,7 +57,7 @@ public class BlocoService {
     }
 
     @Transactional
-    private void removerBloco(int pId){
+    public void removerBloco(int pId){
         if (!blocoRepositery.existsById(pId)){
             throw  new ObjectNotFoundException("Nenhum Bloco encontrado com esse ID");
         }

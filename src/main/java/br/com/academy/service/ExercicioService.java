@@ -31,25 +31,25 @@ public class ExercicioService {
      * ===================================================================================
      * */
     @Transactional(readOnly = true)
-    private ExercicioInputDTO obterPorId(int pId){
+    public ExercicioInputDTO obterPorId(int pId){
         ExercicioModel exercicio = exercicioRepositery.findById(pId).orElseThrow(()-> new ObjectNotFoundException("Exercicio não encontrado"));
         return modelMapper.map(exercicio, ExercicioInputDTO.class);
     }
 
     @Transactional(readOnly = true)
-    private List<ExercicioInputDTO> obterTodosExercicios(){
+    public List<ExercicioInputDTO> obterTodosExercicios(){
         List<ExercicioModel> ListaExercicios = exercicioRepositery.findAll();
         return ListaExercicios.stream().map(exercicioModel -> modelMapper.map(exercicioModel, ExercicioInputDTO.class))
                 .collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional
-    private ExercicioInputDTO adicionarExercicio(ExercicioInputDTO input){
+    public ExercicioInputDTO adicionarExercicio(ExercicioInputDTO input){
         return modelMapper.map(exercicioRepositery.save(modelMapper.map(input, ExercicioModel.class)), ExercicioInputDTO.class);
     }
 
     @Transactional
-    private ExercicioInputDTO atualizarExercicio(ExercicioInputDTO input){
+    public ExercicioInputDTO atualizarExercicio(ExercicioInputDTO input){
         if (!exercicioRepositery.existsById(input.getId())){
             throw  new ObjectNotFoundException("Nenhum Exercicio encontrado com esse ID");
         }
@@ -57,7 +57,7 @@ public class ExercicioService {
     }
 
     @Transactional
-    private void removerExercicio(int pId){
+    public void removerExercicio(int pId){
         if (!exercicioRepositery.existsById(pId)){
             throw  new ObjectNotFoundException("Nenhum Exercicio encontrado com esse ID");
         }
