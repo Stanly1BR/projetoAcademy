@@ -1,0 +1,121 @@
+:root  {
+    --primary-Color: rgba(255, 255, 255, .2);
+    --prymary-boxShadon: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px; /*Lembre que vc pode pesquisar isso! e achar varias sombras já feitas*/
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../img/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.container{
+    width: 420px;
+    background-color: transparent;
+    border: 2px solid var(--primary-Color);
+    border-radius: 10px;
+    color: #fff;
+    padding: 30px 40px;
+    box-shadow: var(--prymary-boxShadon);
+}
+.container h1{
+    font-size: 36px;
+    align-items: center;
+}
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 40px;
+    border: 2px solid var(--primary-Color);
+    outline: none;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+
+
+.input-box input::placeholder{
+    color: #eeeeee;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 25%;
+    font-size: 20px;
+}
+
+.lembre-se {
+    display: flex;
+    justify-content: space-between;
+    margin: -15px 0 15px;
+}
+
+.lembre-se label input {
+    accent-color: #fff;
+    margin-right: 5px;
+}
+
+.lembre-se a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.lembre-se a:hover {
+    text-decoration: underline;
+}
+
+.botao {
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    box-shadow: var(--prymary-boxShadon);
+}
+
+.botao:hover{
+    background-color: transparent;
+    border: 2px solid var(--primary-Color) ;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.registrar-link {
+    font-size: 14px;
+    text-align: center;
+    margin:  20px 0 15px;
+}
+
+.registrar-link a{
+    margin: 0 0 0 2px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+.registrar-link a:hover{
+    text-decoration: underline;
+}
